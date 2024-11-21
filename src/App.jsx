@@ -5,12 +5,14 @@ import Main from "./components/Main.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 
 function App() {
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || []);
+  const [notes, setNotes] = useState(JSON.parse(typeof window !== "undefined" ? localStorage.getItem("notes") : undefined) || []);
   const [activeNote, setActiveNote] = useState(false);
 
   useEffect(() => {
     // ローカルストレージにノートを保存
-    localStorage.setItem("notes", JSON.stringify(notes));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
 
   }, [notes])
 
